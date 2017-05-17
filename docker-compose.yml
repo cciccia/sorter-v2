@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  web:
+    build: ./client
+    networks:
+      - default
+    volumes:
+      - .:/src:rw
+    env_file:
+      - ./dev_resources/config.env
+    command: 
+
+  nginx:
+    build: ./nginx
+    ports:
+      - 19443:80
+    networks:
+      - default
+
+networks:
+  default:

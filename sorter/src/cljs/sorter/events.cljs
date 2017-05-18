@@ -1,11 +1,12 @@
 (ns sorter.events
-    (:require [re-frame.core :as re-frame]
-              [sorter.db :as db]
-              [sorter.localstorage :as l]
-              [secretary.core :as secretary :include-macros true]
-              [ajax.core :as ajax]
-              [day8.re-frame.http-fx])
-    (:import goog.History))
+  (:require-macros [sorter.env :refer [cljs-env]])
+  (:require [re-frame.core :as re-frame]
+            [sorter.db :as db]
+            [sorter.localstorage :as l]
+            [secretary.core :as secretary :include-macros true]
+            [ajax.core :as ajax]
+            [day8.re-frame.http-fx])
+  (:import goog.History))
 
 ; effects
 (re-frame/reg-fx
@@ -72,7 +73,6 @@
  [store-sort-locally]
  (fn [{:keys [db]} _]
    (let [pieces (get-in db [:sort :pieces])]
-     (println db)
      (if (>= 1 (count pieces))
        {:dispatch [:save-run (first pieces)]
         :db db}
@@ -105,7 +105,6 @@
                                                              (:a post-decision)))
                                   (conj pieces))
              new-fx {:db (assoc db :sort (take-pieces-for-merge appended-pieces))}]
-         (println appended-pieces)
          (if (>= 1 (count appended-pieces))
            (assoc new-fx :dispatch [:save-run (first appended-pieces)])
            new-fx))
@@ -121,11 +120,12 @@
 (re-frame/reg-event-fx
  :save-run
  (fn [{:keys [db]} [_ payload]]
+   (println (cljs-env :api-root))
    "Save to db"
    {:local-store ["sort" nil]
     :http-xhrio {:method          :post
                  :data            payload
-                 :uri             "http://whothefuckknows"
+                 :uri             (cljs-env :api-root)
                  :format          (ajax/json-request-format)
                  :response-format (ajax/json-response-format {:keywords? true}) 
                  :on-success      [:location "#/"]}

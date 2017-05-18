@@ -8,7 +8,8 @@
                  [re-com "2.0.0"]
                  [secretary "1.2.3"]
                  [day8.re-frame/http-fx "0.1.3"]
-                 [tailrecursion/cljson "1.0.7"]]
+                 [tailrecursion/cljson "1.0.7"]
+                 [environ "1.1.0"]]
 
   :plugins [[lein-cljsbuild "1.1.4"]
             [lein-less "1.7.5"]]
@@ -20,7 +21,8 @@
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"
                                     "test/js"]
 
-  :figwheel {:css-dirs ["resources/public/css"]}
+  :figwheel {:css-dirs ["resources/public/css"]
+             :repl false}
 
   :less {:source-paths ["less"]
          :target-path  "resources/public/css"}

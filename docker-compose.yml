@@ -1,22 +1,9 @@
 version: '2'
 
 services:
-  web:
-    build: ./client
-    networks:
-      - default
-    volumes:
-      - .:/src:rw
+  client-dev:
+    build: ./sorter
     env_file:
-      - ./dev_resources/config.env
-    command: 
-
-  nginx:
-    build: ./nginx
+      - ./env/development.env
     ports:
-      - 19443:80
-    networks:
-      - default
-
-networks:
-  default:
+      - 3449:3449

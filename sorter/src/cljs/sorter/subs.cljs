@@ -17,3 +17,8 @@
  (fn [db _]
    [(first (get-in db [:sort :merge :a]))
     (first (get-in db [:sort :merge :b]))]))
+
+(re-frame/reg-sub
+ :finished-sort
+ (fn [db _]
+   (first (get-in db [:sort :pieces]))))

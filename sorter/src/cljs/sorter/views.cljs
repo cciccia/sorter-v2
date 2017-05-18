@@ -46,6 +46,23 @@
                               [:input {:type "button" :value (or (second @sort-couple) "") :on-click #(re-frame/dispatch [:set-sort-result :right])}]]]
                   [link-to-home-page]]])))
 
+;; review
+
+(defn list-ranked-members []
+  (let [finished-sort (re-frame/subscribe [:finished-sort])]
+    (fn []
+      [:ol
+       (for [item @finished-sort]
+         [:li item])])))
+         
+
+(defn review-panel []
+  [re-com/v-box
+   :gap "1em"
+   :children [[list-ranked-members]
+              [link-to-run-page]
+              [link-to-home-page]]])
+                  
 
 ;; main
 
@@ -53,6 +70,7 @@
   (case panel-name
     :home-panel [home-panel]
     :run-panel [run-panel]
+    :review-panel [review-panel]
     [:div]))
 
 (defn show-panel [panel-name]

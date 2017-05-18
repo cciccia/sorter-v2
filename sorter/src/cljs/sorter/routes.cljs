@@ -30,6 +30,9 @@
     (re-frame/dispatch [:reset-sort])
     (set! (.-location js/window) "/#/run"))
 
+  (defroute "/review" []
+    (re-frame/dispatch [:set-active-panel :review-panel]))
+
   (defroute "/report/:id" [id]
     (re-frame/dispatch [:set-active-panel :report-panel])
     (re-frame/dispatch [:set-report-id id]))

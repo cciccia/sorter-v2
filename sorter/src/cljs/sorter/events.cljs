@@ -11,9 +11,9 @@
 ; effects
 (re-frame/reg-fx
  :location
- (fn [route]
+ (fn [[route]]
    "Invoke a secretary route change programmatically"
-   (secretary/dispatch! route)))
+   (set! (.-location js/window) route)))
 
 (re-frame/reg-fx
  :local-store
@@ -74,7 +74,7 @@
  (fn [{:keys [db]} _]
    (let [pieces (get-in db [:sort :pieces])]
      (if (>= 1 (count pieces))
-       {:dispatch [:save-run (first pieces)]
+       {:location ["/#/review"]
         :db db}
        {:db (assoc db :sort (take-pieces-for-merge pieces))}))))
 
@@ -106,7 +106,7 @@
                                   (conj pieces))
              new-fx {:db (assoc db :sort (take-pieces-for-merge appended-pieces))}]
          (if (>= 1 (count appended-pieces))
-           (assoc new-fx :dispatch [:save-run (first appended-pieces)])
+           (assoc new-fx :location ["/#/review"])
            new-fx))
        {:db (assoc-in db [:sort :merge] post-decision)}))))
 

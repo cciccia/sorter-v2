@@ -18,9 +18,12 @@
    :href "#/run/new"])
 
 (defn link-to-continue-page []
-  [re-com/hyperlink-href
-   :label "continue current run"
-   :href "#/run"])
+  (let [run-in-progress? (re-frame/subscribe [:run-in-progress?])]
+    (fn []
+      (when @run-in-progress?
+        [re-com/hyperlink-href
+         :label "continue current run"
+         :href "#/run"]))))
 
 (defn home-panel []
   [re-com/v-box

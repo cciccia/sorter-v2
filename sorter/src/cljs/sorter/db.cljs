@@ -12,10 +12,12 @@
 (s/def ::merge (s/keys ::req-un [::a ::b ::c]))
 (s/def ::pieces (s/coll-of (s/coll-of ::id)))
 (s/def ::sort (s/keys :req-un [::pieces ::merge]))
-(s/def ::db (s/keys :req-un [::sort ::name]
+(s/def ::run-in-progress? boolean?)
+(s/def ::db (s/keys :req-un [::sort ::name ::run-in-progress?]
                     :opt-un [::report-id]))
 
-(def sort-bootstrap {:merge {:a []
+(def sort-bootstrap {:run-in-progress? false
+                     :merge {:a []
                              :b []
                              :c []}
                      :pieces [[8] [2] [5] [4] [1] [7] [3] [6]]})

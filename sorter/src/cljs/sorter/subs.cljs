@@ -22,3 +22,14 @@
  :finished-sort
  (fn [db _]
    (first (get-in db [:sort :pieces]))))
+
+(re-frame/reg-sub
+ :run-in-progress?
+ (fn [db _]
+   (:run-in-progress? db)))
+
+(re-frame/reg-sub
+ :run-completed?
+ (fn [db _]
+   (= 1 (count (get-in db [:sort :pieces])))))
+ 

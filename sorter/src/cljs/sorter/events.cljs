@@ -75,8 +75,10 @@
    (let [pieces (get-in db [:sort :pieces])]
      (if (>= 1 (count pieces))
        {:location ["/#/review"]
-        :db db}
-       {:db (assoc db :sort (take-pieces-for-merge pieces))}))))
+        :db (assoc db :run-in-progress? true)}
+       {:db (assoc db
+                   :sort (take-pieces-for-merge pieces)
+                   :run-in-progress? true)}))))
 
 (re-frame/reg-event-fx
  :load-sort
